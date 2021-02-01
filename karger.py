@@ -44,7 +44,7 @@ def contract(ver, e):
 
 print('[+] Starting the program')
 print('[+] Opening the file kargerMinCut.txt (note, that first numbers are node first and other symbolize edges...')
-with open('kargerMinCut.txt', 'r') as infile:
+with open('kargerMinCut-version.txt', 'r') as infile:
         adjMat, edges, vertices = [], [], []
         for line in infile.readlines():
             one = line.split()
@@ -56,7 +56,7 @@ for i in range(len(adjMat)):
                if(int(s[0]) not in vertices):
                     vertices.append(int(s[0]))
                for j in range(1, len(s)):
-                       if [int(s[0]), int(s[j])] not in edges:
+                       if [int(s[0]), int(s[j])] not in edges and [int(s[j]), int(s[0])] not in edges:
                                 edges.append([int(s[0]), int(s[j])])
                        if int(s[j]) not in vertices:
                            vertices.append(int(s[j]))
@@ -64,7 +64,7 @@ print('[+] The grath is now created')
 print('[+] Verticies:', vertices)
 print('[+] Edges:', edges)
 result = []
-for i in range(100):
+for i in range(10):
         print()
         print()
         print('[!] Attempt number', i)
@@ -75,3 +75,9 @@ for i in range(100):
         result.append(r)
 print('[+] All the results we have became:', result)
 print('[=] The minimum is', min(result))
+
+G = nx.Graph()
+G.add_edges_from(edges)
+G.add_nodes_from(vertices)
+nx.draw_networkx(G)
+plt.show()
